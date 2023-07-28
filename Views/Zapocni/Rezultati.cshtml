@@ -1,0 +1,82 @@
+﻿@model RezultatiViewModel
+@{
+	ViewBag.Title = "Rezultati";
+	int i = 1;
+}
+
+<style>
+    /* Custom styles to remove horizontal borders and set the outline border for the second column */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    table td, table th {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    
+    /* Apply outline border to the second column (index 1) */
+    table tr td:nth-child(2) {
+        border: 1px solid black;
+    }
+    
+    /* Remove horizontal borders from the rows */
+    table tr {
+        border-top: none;
+        border-bottom: none;
+    }
+</style>
+<h2>Rezultati sa Turnira</h2>
+<table style="width:50%;align-items:center">
+    <thead>
+        <tr>
+            <th>Tim 1 Ime</th>
+            <th>Tim 1 Broj Golova</th>
+            <th>Tim 2 Broj Golova</th>
+            <th>Tim 2 Ime</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var rezultat in Model.RezultatiVM)
+        {
+            <tr>
+                <td>@rezultat.Tim_1_Ime</td>
+                <td style="text-align:center">@rezultat.Tim_1_BrojGolova</td>
+                <td style ="text-align:center">@rezultat.Tim_2_BrojGolova</td>
+                <td>@rezultat.Tim_2_Ime</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="PregledRezultata" asp-controller="Turnir" asp-route-turnirId="@Model.RezultatiVM.First().TurnirId" class="btn btn-danger mb-2">Izmeni Rezultate</a>
+
+<h1>Rang tabela</h1>
+<table style="width:50%;align-items:center">
+    <thead>
+        <tr>
+            <th>Zasluzeno Mesto</th>
+            <th>Tim</th>
+            <th>Tim Poeni</th>
+            <th>Tim Broj Pobeda</th>
+            <th>Tim Broj Remija</th>
+            <th>Tim Broj Izgubljenih</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tim in Model.TimoviVM)
+        {
+            <tr>
+                <td>@i</td>
+                <td class="text-wrap">@tim.Ime</td>
+                <td>@tim.BrojOsvojenihBodovaNaTurniru</td>
+                <td>@tim.BrojPobeda</td>
+                <td>@tim.BrojRemija</td>
+                <td>@tim.BrojIzgubljenih</td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>

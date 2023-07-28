@@ -1,0 +1,30 @@
+﻿@model List<TimTurnirViewModel>
+@{
+	ViewBag.Title = "Dodaj igrace u Tim";
+	var turnirId = ViewBag.TurnirId;
+}
+<form method="post">
+	<div class="card">
+		<div class="card-header">
+			Dodaj ili izbaci tim
+		</div>
+		<div class="card-body">
+			<!--Ovde se mora proveriti koliko igraca ima u timu, ili jos pre, u contolleru-->
+			@for (int i = 0; i < Model.Count; i++)
+			{
+				<div class="form-check m-1">
+					<input type="hidden" asp-for="@Model[i].TimName">
+					<input type="hidden" asp-for="@Model[i].TimId">
+					<input asp-for="@Model[i].IsSelected" type="checkbox" class="form-check-input">
+					<label asp-for="@Model[i].TimName" class="form-check-label">@Model[i].TimName</label>
+				</div>
+			}
+		</div>
+		<div class="card-footer text-body-secondary">
+			<input type="submit" value="Update" class="btn btn-primary" />
+			<a asp-action="PregledTurnira" asp-controller="Turnir" class="btn btn-danger">Cancel</a>
+		</div>
+	</div>
+</form>
+
+<!--Dodati IF petlju da proveri da li ima modela timova u modelu, ako nema, anchor tag da ide da doda timove-->

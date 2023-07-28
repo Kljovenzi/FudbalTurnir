@@ -1,0 +1,26 @@
+﻿@model List<TurnirModel>
+@{
+	ViewBag.Title = "Odaberi Turnir";
+}
+<h1 class="text-center">Odaberi Turnir</h1>
+<br />
+<br />
+@if(Model != null)
+{
+    <form method="post" asp-controller="Zapocni" asp-action="OdaberiTurnir">
+    <label for="selectedOption"></label>
+    <select  class="form-select form-select-lg mb-3" id="selectedOption" name="selectedOption">
+        @foreach (var turnir in Model)
+        {
+            <option value="@turnir.Id">@turnir.Ime</option>
+        }
+    </select>
+    <br />
+    <input type="submit" value="Pokreni Turnir" />
+</form>
+}
+else
+{
+	<h4>Nema napravljenih turnira</h4>
+	<a asp-action="CreateTurnir" asp-controller="Turnir" class="btn btn-primary mb-2">Napravi novi turnir</a>
+}

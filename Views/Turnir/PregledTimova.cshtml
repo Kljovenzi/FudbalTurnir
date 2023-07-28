@@ -1,0 +1,63 @@
+﻿@model PregledTimovaViewModel
+@{
+	ViewBag.Title = "Pregled Timova";
+}
+<h1> Pregled Timova</h1>
+<br />
+<a asp-action="TurnirOverview" asp-controller="Turnir" class="btn btn-danger mb-2">Povratak</a>
+@if (Model.Timovi.Any())
+{
+	<a asp-action="CreateTim" asp-controller="Turnir" class="btn btn-primary mb-2">Napravi novi tim</a>
+	foreach (var tim in Model.Timovi)
+	{
+		<div class="card mt-2">
+			<div class="card-header">
+				<h3>@tim.Ime </h3>
+			</div>
+			<div class="card-body">
+				<h3 class="--bs-primary-border-subtle">Lista Igraca :</h3>
+				@foreach(var igrac in Model.Igraci)
+				{
+					@if (igrac.TimId == tim.Id)
+					{
+						<h6 class="card-title">@igrac.Ime @igrac.Prezime</h6>
+					}
+				}
+			</div>
+			<div class="card-footer text-body-secondary">
+				<div class="row g-3 align-items-center">
+					<div class="col-auto">
+				<form method="post" asp-action="DeleteTim" asp-route-timId="@tim.Id">
+					<button type="submit"  class="btn btn-danger">Obrisi</button>
+				</form>
+					</div>
+					<div class="col-auto">
+						<a asp-action="UpdateTim" asp-route-timId="@tim.Id" class="btn btn-warning">Izmeni</a>
+						<!--
+				<form method="get" asp-action="UpdateTim" asp-route-timId="@tim.Id">
+					<button type="submit" class="btn btn-warning">Izmeni</button>
+				</form>
+						-->
+					</div>
+					<div class="col-auto">
+				<a asp-action="DodajIgraceUTim" asp-controller="Turnir" asp-route-timId="@tim.Id" class="btn btn-primary">Dodaj/Izbaci Igraca</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div class="card">
+		<div class="card-header">
+		</div>
+		<div class="card-body">
+
+			<p class="card-text">Nema napravljenih timova</p>
+		</div>
+		<div class="card-footer text-body-secondary">
+			<a asp-action="CreateTim" asp-controller="Turnir" class="btn btn-primary">Napravi Tim</a>
+		</div>
+	</div>
+}

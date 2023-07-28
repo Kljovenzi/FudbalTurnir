@@ -1,0 +1,58 @@
+﻿@model PregledTurniraViewModel
+@{
+	ViewBag.Title = "Pregled Turnira";
+}
+<h1> Pregled Turnira</h1>
+<br />
+<a asp-action="TurnirOverview" asp-controller="Turnir" class="btn btn-danger mb-2">Povratak</a>
+@if (Model.Turniri.Any())
+{
+	<a asp-action="CreateTurnir" asp-controller="Turnir" class="btn btn-primary mb-2">Napravi novi turnir</a>
+	foreach (var turnir in Model.Turniri)
+	{
+		<div class="card mt-2">
+			<div class="card-header">
+				<h3>@turnir.Ime </h3>
+			</div>
+			<div class="card-body">
+				<h3 class="--bs-primary-border-subtle">Timovi koji učestvuju</h3>
+				@foreach (var tim in Model.Timovi)
+				{
+					@if (tim.TurnirId == turnir.Id)
+					{
+						<h6 class="card-title">@tim.Ime</h6>
+					}
+				}
+			</div>
+			<div class="card-footer text-body-secondary">
+				<div class="row g-3 align-items-center">
+					<div class="col-auto">
+						<form method="post" asp-action="DeleteTurnir" asp-route-turnirId="@turnir.Id">
+							<button type="submit" class="btn btn-danger">Obrisi</button>
+						</form>
+					</div>
+					<div class="col-auto">
+						<a asp-action="UpdateTurnir" asp-route-turnirId="@turnir.Id" class="btn btn-warning">Izmeni</a>
+					</div>
+					<div class="col-auto">
+						<a asp-action="DodajTimoveUTurnir" asp-controller="Turnir" asp-route-turnirId="@turnir.Id" class="btn btn-primary">Dodaj/Izbaci Turnir</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div class="card">
+		<div class="card-header">
+		</div>
+		<div class="card-body">
+
+			<p class="card-text">Nema napravljenih turnira</p>
+		</div>
+		<div class="card-footer text-body-secondary">
+			<a asp-action="CreateTurnir" asp-controller="Turnir" class="btn btn-primary">Napravi Turnir</a>
+		</div>
+	</div>
+}

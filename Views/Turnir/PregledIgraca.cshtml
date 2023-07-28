@@ -1,0 +1,97 @@
+﻿@model IEnumerable<IgracModel>
+@{
+	ViewBag.Title="Pregled Igraca";
+}
+<h1>Pregled Igraca</h1>
+<br />
+<a asp-action="TurnirOverview" asp-controller="Turnir" class="btn btn-danger mb-2">Povratak</a>
+@if (Model.Any())
+{
+	<a asp-action="CreateIgrac" asp-controller="Turnir" class="btn btn-primary mb-2">Napravi novog Igraca</a>
+
+		<div class="card mt-2">
+			<div class="card-header">
+			<h3 >Raspolozivi Igraci</h3>
+			</div>
+			<div class="card-body">
+			<ul class="list-group">
+				@foreach (var igrac in Model)
+				{
+					if (igrac.TimId == null)
+					{
+						<li class="list-group-item">
+							<div class="row g-3 justify-content-between">
+								<div class="col-auto">
+									<label for="@igrac.Ime" class="form-control-lg">@igrac.Ime @igrac.Prezime</label>			
+								</div>
+								<div class="col-auto">
+									<div class="btn-group ml-2" role="group" aria-label="Basic mixed styles example">
+										<form method="post" asp-action="DeleteIgrac" asp-route-igracId="@igrac.Id">
+											<button type="submit" class="btn btn-danger">Obrisi</button>
+										</form>
+										<a asp-action="UpdateIgrac" asp-route-igracId="@igrac.Id" class="btn btn-warning">Izmeni</a>
+										<!--
+										<form method="get" asp-action="IzmeniIgrac" asp-route-igracId="@igrac.Id">
+											<button type="submit" class="btn btn-warning">Izmeni</button>
+										</form>
+										-->
+									</div>
+								</div>
+							</div>
+						</li>
+					}
+				}
+			</ul>
+			</div>
+		</div>
+	<div class="card mt-2">
+		<div class="card-header">
+			<h3>Igraci Dodeljeni nekom Timu</h3>
+		</div>
+		<div class="card-body">
+			<ul class="list-group">
+			@foreach (var igrac in Model)
+			{
+				if (igrac.TimId != null)
+				{
+						<li class="list-group-item">
+							<div class="row g-3 justify-content-between">
+								<div class="col-auto">
+									<label for="@igrac.Ime" class="form-control-lg">@igrac.Ime @igrac.Prezime</label>
+								</div>
+								<div class="col-auto">
+									<div class="btn-group ml-2" role="group" aria-label="Basic mixed styles example">
+										<form method="post" asp-action="DeleteIgrac" asp-route-igracId="@igrac.Id">
+											<button type="submit" class="btn btn-danger">Obrisi</button>
+										</form>
+										<a asp-action="UpdateIgrac" asp-route-igracId="@igrac.Id" class="btn btn-warning">Izmeni</a>
+										<!--
+										<form method="get" asp-action="IzmeniIgrac" asp-route-igracId="@igrac.Id">
+											<button type="submit" class="btn btn-warning">Izmeni</button>
+										</form>
+										-->
+									</div>
+								</div>
+							</div>
+						</li>
+				}
+			}
+			</ul>
+		</div>
+	</div>
+
+}
+else
+{
+	<div class="card">
+		<div class="card-header">
+		</div>
+		<div class="card-body">
+
+			<p class="card-text">Nema napravljenih Igraca</p>
+		</div>
+		<div class="card-footer text-body-secondary">
+			<a asp-action="CreateIgrac" asp-controller="Turnir" class="btn btn-primary">Napravi novog Igraca</a>
+		</div>
+	</div>
+}

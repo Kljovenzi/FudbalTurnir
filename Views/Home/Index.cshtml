@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <img src="~/images/soccer.jpg" style="width:200px"/>
+    <h2 class="display-4">Učitaj Turnir, pregledaj rezultate, rang tabelu</h2>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Izaberi Turnir
+        </button>
+        <ul class="dropdown-menu">
+            <!--To Do: Implementirati da vidi sve turnire, trebaće Model da bude lista turnira, ovde sa foreach da ih izlista
+                i da se napravi view gde će se pregledati rezultati po rundama i konačna tabela
+            -->
+            <li><a class="dropdown-item" href="#">Nedovrseno</a></li>
+
+        </ul>
+    </div>
+    <h1 class="display-4">Napravi Fudbalski TURNIR</h1>
+    <a asp-action="TurnirOverview" asp-controller="Turnir" class="btn btn-primary">Napravi turnir</a>
+</div>

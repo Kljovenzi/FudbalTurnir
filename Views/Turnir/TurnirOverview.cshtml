@@ -1,0 +1,21 @@
+﻿@{
+	ViewData["Title"] = "Four Buttons View";
+}
+
+<div class="flex-container">
+	<div class="flex-item">
+		<a asp-action="PregledTimova" asp-controller="Turnir" class="link">Pregled Timova</a>
+	</div>
+	<div class="flex-item">
+		<a asp-action="PregledIgraca" asp-controller="Turnir" class="link">Pregled Igraca</a>
+	</div>
+	<div class="flex-item">
+		<a asp-action="PregledTurnira" asp-controller="Turnir" class="link">Pregled Turnira</a>
+	</div>
+	<div class="flex-item">
+		<a asp-action="OdaberiTurnir" asp-controller="Zapocni" class="zapocni">Zapocni Turnir</a>
+	</div>
+</div>
+
+
+<a asp-action="Index" asp-controller="Home" class="btn btn-outline-danger mb-2 mt-2">Početna strana</a>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<RezultatModel>
+@{
+    ViewBag.Title = "Izmeni Rezultate";
+    int i = 0;
+}
+<h2>Rezultati sa Turnira</h2>
+<table style="width:50%;align-items:center">
+    <thead>
+        <tr>
+            <th>Tim 1 Ime</th>
+            <th>Tim 1 Broj Golova</th>
+            <th>Tim 2 Broj Golova</th>
+            <th>Tim 2 Ime</th>
+        </tr>
+    </thead>
+    <tbody>
+        <form action="/process" method="post">
+        @foreach(var rezultat in Model)
+        {
+            <tr>
+                <td>@rezultat.Tim_1_Ime</td>
+                <td style="text-align:center">
+                    <input asp-for="@rezultat.Tim_1_BrojGolova" type="Tim_1_BrojGolova" id="Tim_1_BrojGolova" value="@rezultat.Tim_1_BrojGolova" required>
+                </td>
+                <td style="text-align:center">
+                    <input asp-for="@rezultat.Tim_2_BrojGolova" type="Tim_2_BrojGolova" id="Tim_2_BrojGolova" value="@rezultat.Tim_2_BrojGolova" required>
+                </td>
+                <td style ="text-align:center">@rezultat.Tim_2_BrojGolova</td>
+                <td>@rezultat.Tim_2_Ime</td>
+            </tr>
+        }
+        <button type="submit">Submit</button>
+        </form>
+    </tbody>
+</table>
