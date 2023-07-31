@@ -1,4 +1,6 @@
-﻿namespace FudbalskiTurnir_FilipNikolic.Models.Repository
+﻿using FudbalskiTurnir_FilipNikolic.Models.ViewModel;
+
+namespace FudbalskiTurnir_FilipNikolic.Models.Repository
 {
     public interface IFudbalskiTurnir
     {
@@ -7,7 +9,7 @@
         /// </summary>
         TurnirModel CreateTurnir(string ime);
         void DeleteTurnir(int id);
-        void UpdateTurnir(string ime);
+        void UpdateTurnir(TurnirModel turnir);
         TurnirModel ReadTurnir(int id);
 
         /// <summary>
@@ -31,15 +33,15 @@
         /// CRUD Metode koje su potrebne za rad sa  - rezultatima -
         /// </summary>
         void CreateRezultati (List<RezultatModel> rezultati);
-        void DeleteRezultat(RezultatModel rezultat);
-        RezultatModel UpdateRezultat (RezultatModel rezultat , int id);
+        void DeleteRezultate(int turnirId);
+        RezultatModel UpdateRezultat (IzmeniRezultatViewModel rezultat );
         RezultatModel ReadRezultat(int id);
 
         /// <summary>
         /// Čita i vraća sve rezultate , sve timove, sve igrače
         /// </summary>
         /// <returns></returns>
-        IEnumerable<RezultatModel> ReadAlLRezultat();
+        IEnumerable<RezultatModel> ReadAlLRezultat(int turnirId);
         IEnumerable<TimModel> ReadAllTim();
         IEnumerable<IgracModel> ReadAllIgrac();
         IEnumerable<TurnirModel> ReadAllTurnir();
@@ -67,8 +69,9 @@
         /// <param name="timovi"></param>
         /// <returns></returns>
         List<RezultatModel> NapraviRezultate(TimModel[] timovi, int turnirId);
-        void DodajIshode(RezultatModel rezultat);
-        TimModel[] PoredjajTimovePoPoenima(TimModel[] timovi);
+        void DodajIshode(List<RezultatModel> rezultat);
+        List<TimModel> PoredjajTimovePoPoenima(List<TimModel> timovi);
+        void TurnirOdigran(int turnirId);
 
     }
 }

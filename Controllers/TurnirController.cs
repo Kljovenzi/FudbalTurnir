@@ -68,7 +68,7 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
             PregledTimovaViewModel model = new PregledTimovaViewModel()
             {
                 Igraci = igraci.ToList(),
-                Timovi = timovi.ToList()         
+                Timovi = timovi.ToList()
             };
             return View(model);
         }
@@ -77,22 +77,22 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
         {
             ViewBag.TimId = timId;
             var tim = fudbalskiTurnir.ReadTim(timId);
-            if(tim == null)
+            if (tim == null)
             {
                 ViewBag.ErrorMessage = $"Tim sa Id {timId} ne moze biti pronadjen.";
                 return View("Not Found");
             }
-            List<IgracModel> igraci = fudbalskiTurnir.ReadAllIgrac().Where(p=>p.TimId==timId || p.TimId==null).ToList();
+            List<IgracModel> igraci = fudbalskiTurnir.ReadAllIgrac().Where(p => p.TimId == timId || p.TimId == null).ToList();
             var model = new List<IgracTimViewModel>();
 
-            foreach(var igrac in igraci)
+            foreach (var igrac in igraci)
             {
                 var igracTimViewModel = new IgracTimViewModel
                 {
                     IgracId = igrac.Id,
                     IgracName = igrac.Ime
                 };
-                if(igrac.TimId == timId)
+                if (igrac.TimId == timId)
                 {
                     igracTimViewModel.IsSelected = true;
                 }
@@ -109,16 +109,16 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
         {
             foreach (var igrac in model)
             {
-                if(igrac.IsSelected)
-                { 
+                if (igrac.IsSelected)
+                {
                     fudbalskiTurnir.DodajIgracaUTim(igrac.IgracId, timId);
                 }
                 else
                 {
                     fudbalskiTurnir.IzbaciIgracaIzTima(igrac.IgracId);
                 }
-            }       
-            return RedirectToAction("PregledTimova" , "Turnir");
+            }
+            return RedirectToAction("PregledTimova", "Turnir");
         }
         [HttpGet]
         public IActionResult DodajTimoveUTurnir(int turnirId)
@@ -219,7 +219,7 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
         {
             ViewBag.TimId = timId;
             var tim = fudbalskiTurnir.ReadTim(timId);
-            CreateTimViewModel timUpdate = new CreateTimViewModel { Ime = tim.Ime};
+            CreateTimViewModel timUpdate = new CreateTimViewModel { Ime = tim.Ime };
             return View(timUpdate);
         }
         [HttpPost]
@@ -227,7 +227,7 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
         {
             CreateTimViewModelValidator validator = new CreateTimViewModelValidator();
             var result = validator.Validate(model);
-            if(result.IsValid)
+            if (result.IsValid)
             {
                 TimModel tim = fudbalskiTurnir.ReadTim(timId);
                 tim.Ime = model.Ime;
@@ -238,11 +238,34 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
             return View(timId);
         }
         [HttpGet]
+        public IActionResult UpdateTurnir(int turnirId)
+        {
+            ViewBag.TurnirId = turnirId;
+            var turnir = fudbalskiTurnir.ReadTurnir(turnirId);
+            CreateTurnirViewModel turnirUpdate = new CreateTurnirViewModel { Ime = turnir.Ime };
+            return View(turnirUpdate);
+        }
+        [HttpPost]
+        public IActionResult UpdateTurnir(CreateTurnirViewModel model, int turnirId)
+        {
+            CreateTurnirViewModelValidator validator = new CreateTurnirViewModelValidator();
+            var result = validator.Validate(model);
+            if (result.IsValid)
+            {
+                TurnirModel turnir = fudbalskiTurnir.ReadTurnir(turnirId);
+                turnir.Ime = model.Ime;
+                fudbalskiTurnir.UpdateTurnir(turnir);
+                return RedirectToAction("PregledTurnira", "Turnir");
+            }
+            ModelState.AddModelError("", "Molim unesite pravilno ime.");
+            return View(turnirId);
+        }
+        [HttpGet]
         public IActionResult UpdateIgrac(int igracId)
         {
             ViewBag.IgracId = igracId;
             var igrac = fudbalskiTurnir.ReadIgrac(igracId);
-            CreateIgracViewModel igracUpdate = new CreateIgracViewModel { Ime = igrac.Ime , Prezime = igrac.Prezime };
+            CreateIgracViewModel igracUpdate = new CreateIgracViewModel { Ime = igrac.Ime, Prezime = igrac.Prezime };
             return View(igracUpdate);
         }
         [HttpPost]
@@ -281,7 +304,7 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
         [HttpGet]
         public IActionResult PregledRezultata(int turnirId)
         {
-            var rezultati = fudbalskiTurnir.ReadAlLRezultat().Where(x => x.TurnirId == turnirId);
+            var rezultati = fudbalskiTurnir.ReadAlLRezultat(turnirId);
             return View(rezultati);
         }
         // NEDOVRSENO, potrebna dorada
@@ -289,6 +312,33 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
         public IActionResult PregledRezultata(IEnumerable<RezultatModel> rezultati)
         {
             return View();
+        }
+        [HttpGet]
+        public IActionResult UpdateRezultat(int rezultatId)
+        {
+            var rezultat = fudbalskiTurnir.ReadRezultat(rezultatId);
+            IzmeniRezultatViewModel izmeni = new IzmeniRezultatViewModel
+            {
+                Tim1BrojGolova = rezultat.Tim_1_BrojGolova,
+                Tim2BrojGolova = rezultat.Tim_2_BrojGolova,
+                Tim1Ime = rezultat.Tim_1_Ime,
+                Tim2Ime = rezultat.Tim_2_Ime,
+                RezultatId = rezultat.Id
+            };
+            ViewBag.RezultatId = rezultatId;
+            return View(izmeni);
+        }
+        [HttpPost] 
+        public IActionResult UpdateRezultat(IzmeniRezultatViewModel izmeni)
+        {
+            var rezultat = fudbalskiTurnir.ReadRezultat(izmeni.RezultatId);
+
+            var result = fudbalskiTurnir.UpdateRezultat(izmeni);
+
+            return RedirectToAction("Rezultati", "Zapocni", new
+            {
+                selectedOption = result.TurnirId
+            }) ;
         }
     }
 }

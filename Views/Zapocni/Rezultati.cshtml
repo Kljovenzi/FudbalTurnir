@@ -1,4 +1,4 @@
-﻿@model RezultatiViewModel
+﻿@model List<RezultatModel>
 @{
 	ViewBag.Title = "Rezultati";
 	int i = 1;
@@ -28,6 +28,7 @@
         border-bottom: none;
     }
 </style>
+@ViewBag.ErrorMessage
 <h2>Rezultati sa Turnira</h2>
 <table style="width:50%;align-items:center">
     <thead>
@@ -39,44 +40,23 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var rezultat in Model.RezultatiVM)
+        @foreach(var rezultat in Model)
         {
             <tr>
                 <td>@rezultat.Tim_1_Ime</td>
                 <td style="text-align:center">@rezultat.Tim_1_BrojGolova</td>
                 <td style ="text-align:center">@rezultat.Tim_2_BrojGolova</td>
                 <td>@rezultat.Tim_2_Ime</td>
+                <td>
+                    <a asp-action="UpdateRezultat" asp-controller="Turnir" asp-route-rezultatId="@rezultat.Id" class="btn btn-danger mb-2">Izmeni Rezultate</a>
+                </td>
             </tr>
         }
     </tbody>
+    <tfoot>
+    <a asp-action="IzmeniRezultate" asp-controller="Zapocni" asp-route-turnirId="@Model.First().TurnirId" class="btn btn-danger mb-2">Izmeni Rezultate</a>
+    </tfoot>
 </table>
 
-<a asp-action="PregledRezultata" asp-controller="Turnir" asp-route-turnirId="@Model.RezultatiVM.First().TurnirId" class="btn btn-danger mb-2">Izmeni Rezultate</a>
+<a asp-action="SacuvajTurnir" asp-controller="Zapocni" asp-route-turnirId="@Model.First().TurnirId" class="btn btn-danger mb-2">Sacuvaj Turnir</a>
 
-<h1>Rang tabela</h1>
-<table style="width:50%;align-items:center">
-    <thead>
-        <tr>
-            <th>Zasluzeno Mesto</th>
-            <th>Tim</th>
-            <th>Tim Poeni</th>
-            <th>Tim Broj Pobeda</th>
-            <th>Tim Broj Remija</th>
-            <th>Tim Broj Izgubljenih</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tim in Model.TimoviVM)
-        {
-            <tr>
-                <td>@i</td>
-                <td class="text-wrap">@tim.Ime</td>
-                <td>@tim.BrojOsvojenihBodovaNaTurniru</td>
-                <td>@tim.BrojPobeda</td>
-                <td>@tim.BrojRemija</td>
-                <td>@tim.BrojIzgubljenih</td>
-            </tr>
-            i++;
-        }
-    </tbody>
-</table>

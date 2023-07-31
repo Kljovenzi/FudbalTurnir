@@ -5,6 +5,9 @@
 <h1 class="text-center">Odaberi Turnir</h1>
 <br />
 <br />
+<div asp-validation-summary="All" class="text-danger">
+    <a asp-action="PregledTurnira" asp-controller="Turnir" class="btn btn-primary mb-2">Dodaj timove u turnir</a>
+</div>
 @if(Model != null)
 {
     <form method="post" asp-controller="Zapocni" asp-action="OdaberiTurnir">

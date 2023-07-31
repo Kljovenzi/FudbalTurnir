@@ -32,7 +32,7 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("index", "home");
+            return RedirectToAction("TurnirOverview", "Turnir");
         }
         [HttpGet]
         public IActionResult LogIn()
@@ -47,9 +47,9 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
             if (result.IsValid)
             {
                 var signInResult = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if(signInResult.Succeeded)
+                if (signInResult.Succeeded)
                 {
-                    return RedirectToAction("index", "Home");
+                    return RedirectToAction("TurnirOverview", "Turnir");
                 }
 
                 ModelState.AddModelError(String.Empty, "Invalid LogIn attempt");
@@ -66,7 +66,7 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
         {
             var validator = new RegisterViewModelValidator();
             ValidationResult result = validator.Validate(model);
-            if(result.IsValid)
+            if (result.IsValid)
             {
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var createResult = await userManager.CreateAsync(user, model.Password);
@@ -89,13 +89,17 @@ namespace FudbalskiTurnir_FilipNikolic.Controllers
                         await roleManager.CreateAsync(new IdentityRole { Name = "User" });
                         await userManager.AddToRoleAsync(user, "User");
                     }
-                   await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "Home");
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("TurnirOverview", "Turnir");
                 }
-                foreach(var error in createResult.Errors)
+                foreach (var error in createResult.Errors)
                 {
                     ModelState.AddModelError(" ", error.Description);
                 }
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(" ", error.ErrorMessage);
             }
             return View(model);
         }

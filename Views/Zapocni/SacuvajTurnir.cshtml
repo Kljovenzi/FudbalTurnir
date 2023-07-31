@@ -1,0 +1,36 @@
+﻿@model List<TimModel>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Sacuvaj Turnir";
+    int i = 1;
+}
+<h1>Rang tabela</h1>
+<table style="width:50%;align-items:center">
+    <thead>
+        <tr>
+            <th>Zasluzeno Mesto</th>
+            <th>Tim</th>
+            <th>Tim Poeni</th>
+            <th>Tim Broj Pobeda</th>
+            <th>Tim Broj Remija</th>
+            <th>Tim Broj Izgubljenih</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tim in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td class="text-wrap">@tim.Ime</td>
+                <td>@tim.BrojOsvojenihBodovaNaTurniru</td>
+                <td>@tim.BrojPobeda</td>
+                <td>@tim.BrojRemija</td>
+                <td>@tim.BrojIzgubljenih</td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+				<a asp-action="TurnirOverview" asp-controller="Turnir" class="btn btn-primary">Nazad na Pocetnu</a>

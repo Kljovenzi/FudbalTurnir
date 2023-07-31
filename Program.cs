@@ -43,7 +43,7 @@ namespace FudbalskiTurnir_FilipNikolic
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Turnir}/{action=TurnirOverview}/{id?}");
 
             app.Run();
         }

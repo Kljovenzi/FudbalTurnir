@@ -1,21 +1,30 @@
 ﻿@{
 	ViewData["Title"] = "Four Buttons View";
 }
-
-<div class="flex-container">
-	<div class="flex-item">
-		<a asp-action="PregledTimova" asp-controller="Turnir" class="link">Pregled Timova</a>
+<style>
+		body {
+	  background-image: url('../images/background.png');
+	  background-repeat: no-repeat;
+	  background-attachment: fixed;
+	  background-size: cover;
+	}
+</style>
+	<div class="flex-container d-flex justify-content-center mt-5">
+		<div>
+			<div class="pb-2">
+				<a asp-action="PregledTimova" asp-controller="Turnir" class="btn btn-primary" data-toggle="tooltip"
+				   data-placement="top" title="Napravi novi tim, dodaj igrace u timove, obrisi timove, izmeni imena timova">Pregled Timova</a>
+			</div>
+			<div class="pb-2">
+				<a asp-action="PregledIgraca" asp-controller="Turnir" class="btn btn-primary"
+				   data-placement="top" title="Napravi novog igraca, izmeni ime igraca, obrisi igraca, proveri njihovu dostupnost">Pregled Igraca</a>
+			</div>
+			<div class="pb-2">
+				<a asp-action="PregledTurnira" asp-controller="Turnir" class="btn btn-primary"
+				   data-placement="top" title="Napravi novi turnir, izmeni ime turnira, obrisi turnir ili dodaj timove u turnir">Pregled Turnira</a>
+			</div>
+			<div class="pb-2">
+				<a asp-action="OdaberiTurnir" asp-controller="Zapocni" class="btn btn-success">Zapocni Turnir</a>
+			</div>
+		</div>
 	</div>
-	<div class="flex-item">
-		<a asp-action="PregledIgraca" asp-controller="Turnir" class="link">Pregled Igraca</a>
-	</div>
-	<div class="flex-item">
-		<a asp-action="PregledTurnira" asp-controller="Turnir" class="link">Pregled Turnira</a>
-	</div>
-	<div class="flex-item">
-		<a asp-action="OdaberiTurnir" asp-controller="Zapocni" class="zapocni">Zapocni Turnir</a>
-	</div>
-</div>
-
-
-<a asp-action="Index" asp-controller="Home" class="btn btn-outline-danger mb-2 mt-2">Početna strana</a>

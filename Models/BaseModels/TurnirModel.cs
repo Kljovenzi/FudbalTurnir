@@ -14,5 +14,6 @@ namespace FudbalskiTurnir_FilipNikolic
         public int Id { get; set; }
         public string Ime { get; set; }
         public List<TimModel>? Timovi { get; set; } = new List<TimModel>();
+        public bool TurnirOdigran { get; set; }
     }
 }
