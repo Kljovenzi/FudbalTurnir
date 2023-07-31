@@ -13,10 +13,11 @@ namespace FudbalskiTurnir_FilipNikolic.Models.Validation.AccountValidators
 
             RuleFor(x => x.ConfirmPassword)
                 .NotEmpty().WithMessage("Password is required.")
-                .Equal(x => x.ConfirmPassword).WithMessage("Confirm Password do not match the Password.");
+                .Equal(x => x.Password).WithMessage("Confirm Password do not match the Password.");
 
             RuleFor(x => x.UserName)
-                .NotEmpty().WithMessage("User Name must not be empty.");
+                .NotEmpty().WithMessage("User Name must not be empty.")
+                .MinimumLength(4).WithMessage("UserName mus be at least 4 letters long.");
 
             RuleFor(x => x.Email)
                 .EmailAddress().WithMessage("Please enter proper email adress.");

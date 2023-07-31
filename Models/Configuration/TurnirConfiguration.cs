@@ -12,6 +12,8 @@ namespace FudbalskiTurnir_FilipNikolic.Models.Configuration
             builder.HasMany(p=>p.Timovi)
                    .WithOne(p=>p.Turnir)
                    .HasForeignKey(p=>p.TurnirId);
+            builder.Property(x => x.TurnirOdigran)
+                .HasDefaultValue(false);
 
         }
     }

@@ -15,12 +15,19 @@
 				<h3>@turnir.Ime </h3>
 			</div>
 			<div class="card-body">
-				<h3 class="--bs-primary-border-subtle">Timovi koji učestvuju</h3>
-				@foreach (var tim in Model.Timovi)
+				@if (!Model.Timovi.Where(t => t.TurnirId == turnir.Id).Any())
 				{
-					@if (tim.TurnirId == turnir.Id)
+					<h6>Na ovom turniru nema timova koji ucestvuju. Dodaj timove.</h6>
+				}
+				else
+				{
+					<h6 class="--bs-primary-border-subtle">Timovi koji učestvuju</h6>
+					@foreach (var tim in Model.Timovi)
 					{
-						<h6 class="card-title">@tim.Ime</h6>
+						@if (tim.TurnirId == turnir.Id)
+						{
+							<h6 class="card-title">@tim.Ime</h6>
+						}
 					}
 				}
 			</div>
@@ -35,7 +42,7 @@
 						<a asp-action="UpdateTurnir" asp-route-turnirId="@turnir.Id" class="btn btn-warning">Izmeni</a>
 					</div>
 					<div class="col-auto">
-						<a asp-action="DodajTimoveUTurnir" asp-controller="Turnir" asp-route-turnirId="@turnir.Id" class="btn btn-primary">Dodaj/Izbaci Turnir</a>
+						<a asp-action="DodajTimoveUTurnir" asp-controller="Turnir" asp-route-turnirId="@turnir.Id" class="btn btn-primary">Dodaj/Izbaci Tim</a>
 					</div>
 				</div>
 			</div>

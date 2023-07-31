@@ -1,0 +1,36 @@
+﻿@model IzmeniRezultatViewModel
+
+@{
+	ViewBag.Title = "Update Rezultat";
+	int rezultatId = ViewBag.RezultatId;
+}
+
+<form method="post" >
+	<div asp-validation-summary="All" class="text-danger"></div>
+	<div>
+		<label asp-for="RezultatId" ></label>
+			<input asp-for="RezultatId" type="hidden" value="@rezultatId" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="Tim1Ime"></label>
+		<input asp-for="Tim1Ime" type="hidden" class="form-control" />
+		<span asp-validation-for="Tim1Ime" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Tim1BrojGolova"></label>
+		<input asp-for="Tim1BrojGolova" type="number" value="@Model.Tim1BrojGolova" class="form-control" />
+		<span asp-validation-for="Tim1BrojGolova" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Tim2BrojGolova"></label>
+		<input asp-for="Tim2BrojGolova" type="number" value="@Model.Tim2BrojGolova" class="form-control" />
+		<span asp-validation-for="Tim2BrojGolova" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Tim2Ime"></label>
+		<input asp-for="Tim2Ime" type="hidden" class="form-control" />
+		<span asp-validation-for="Tim2Ime" class="text-danger"></span>
+	</div>
+	<button type="submit" class="btn btn-primary mt-1">Izmeni</button>
+</form>
+
